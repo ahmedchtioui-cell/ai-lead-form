@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Lead Dashboard</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  margin: 0;
+  padding: 30px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+}
+
+h1 {
+  margin-bottom: 25px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.card .value {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 14px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+th {
+  background: #f1f3f5;
+}
+
+.status {
+  font-weight: bold;
+}
+
+@media (max-width: 700px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AI Lead Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<h3>Total Leads</h3>
+<div class="value" id="total">-</div>
+</div>
+
+<div class="card">
+<h3>HOT Leads</h3>
+<div class="value" id="hot">-</div>
+</div>
+
+<div class="card">
+<h3>COLD Leads</h3>
+<div class="value" id="cold">-</div>
+</div>
+
+<div class="card">
+<h3>Average AI Score</h3>
+<div class="value" id="average">-</div>
+</div>
+
+</div>
+
+<table>
+
+<thead>
+<tr>
+<th>Name</th>
+<th>Budget</th>
+<th>Status</th>
+<th>Score</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="leadTable"></tbody>
+
+</table>
+
+</div>
+
+<script>
+
+const API_URL = "https://webandelec.app.n8n.cloud/webhook/ai-lead";
+
+async function loadDashboard() {
+
+  const response = await fetch(API_URL);
+  const data = await response.json();
+
+  document.getElementById("total").textContent = data.total;
+  document.getElementById("hot").textContent = data.hot;
+  document.getElementById("cold").textContent = data.cold;
+  document.getElementById("average").textContent =
+    data.average_score + "/100";
+
+  const table = document.getElementById("leadTable");
+
+  table.innerHTML = "";
+
+  data.leads.forEach(lead => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${lead.name}</td>
+      <td>$${lead.budget}</td>
+      <td class="status">${lead.status}</td>
+      <td>${lead.score}</td>
+      <td>${new Date(lead.created_at).toLocaleDateString()}</td>
+    `;
+
+    table.appendChild(row);
+
+  });
+
+}
+
+loadDashboard();
+
+</script>
+
+</body>
+</html>

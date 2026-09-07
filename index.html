@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request a Consultation</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-box {
+      background: white;
+      padding: 30px;
+      width: 380px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="form-box">
+
+  <h2>Request a Consultation</h2>
+
+  <form action="https://webandelec.app.n8n.cloud/webhook/ai-lead" method="POST">
+
+    <label>Name</label>
+    <input type="text" name="name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Budget ($)</label>
+    <input type="number" name="budget" required>
+
+    <label>What do you need?</label>
+    <textarea name="intent" rows="5" required></textarea>
+
+    <button type="submit">
+      Submit Request
+    </button>
+
+  </form>
+
+</div>
+
+</body>
+</html>

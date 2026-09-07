@@ -126,6 +126,36 @@ th {
     grid-template-columns: 1fr;
   }
 }
+  .table-card {
+  background: white;
+  border-radius: 16px;
+  overflow-x: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-hot {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-cold {
+  background: #fee2e2;
+  color: #991b1b;
+}
 </style>
 </head>
 
@@ -161,6 +191,7 @@ th {
 </div>
 
 </div>
+<div class="table-card">
 
 <table>
 
@@ -177,7 +208,7 @@ th {
 <tbody id="leadTable"></tbody>
 
 </table>
-
+</div>
 </div>
 
 <script>
@@ -206,8 +237,11 @@ async function loadDashboard() {
     row.innerHTML = `
       <td>${lead.name}</td>
       <td>$${lead.budget}</td>
-      <td class="status">${lead.status}</td>
-      <td>${lead.score}</td>
+<td>
+  <span class="status-badge ${lead.status === 'HOT' ? 'status-hot' : 'status-cold'}">
+    ${lead.status}
+  </span>
+</td>      <td>${lead.score}</td>
       <td>${new Date(lead.created_at).toLocaleDateString()}</td>
     `;
 

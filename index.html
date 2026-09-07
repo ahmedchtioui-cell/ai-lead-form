@@ -57,16 +57,22 @@
   <form action="https://webandelec.app.n8n.cloud/webhook/ai-lead" method="POST">
 
     <label>Name</label>
-    <input type="text" name="name" required>
+    <input type="text" name="name" minlength="2" maxlength="60" required>
 
     <label>Email</label>
     <input type="email" name="email" required>
 
     <label>Budget ($)</label>
-    <input type="number" name="budget" required>
+    <input type="number" name="budget" min="0" max="1000000" required>
 
     <label>What do you need?</label>
-    <textarea name="intent" rows="5" required></textarea>
+    <textarea
+    name="intent"
+    minlength="10"
+    maxlength="1000"
+    rows="5"
+    required>
+    </textarea>
 
     <button type="submit">
       Submit Request

@@ -236,16 +236,27 @@ async function loadDashboard() {
 
     const row = document.createElement("tr");
 
-    row.innerHTML = `
-      <td>${lead.name}</td>
-      <td>$${lead.budget}</td>
-<td>
-  <span class="status-badge ${lead.status === 'HOT' ? 'status-hot' : 'status-cold'}">
-    ${lead.status}
-  </span>
-</td>      <td>${lead.score}</td>
-      <td>${new Date(lead.created_at).toLocaleDateString()}</td>
-    `;
+    const nameCell = document.createElement("td");
+    nameCell.textContent = lead.name;
+
+    const budgetCell = document.createElement("td");
+    budgetCell.textContent = `$${lead.budget}`;
+
+    const statusCell = document.createElement("td");
+    const statusBadge = document.createElement("span");
+    statusBadge.className =
+      `status-badge ${lead.status === 'HOT' ? 'status-hot' : 'status-cold'}`;
+    statusBadge.textContent = lead.status;
+    statusCell.appendChild(statusBadge);
+
+    const scoreCell = document.createElement("td");
+    scoreCell.textContent = lead.score;
+
+    const dateCell = document.createElement("td");
+    dateCell.textContent =
+      new Date(lead.created_at).toLocaleDateString();
+
+    row.append(nameCell, budgetCell, statusCell, scoreCell, dateCell);
 
     table.appendChild(row);
 

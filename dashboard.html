@@ -219,8 +219,21 @@ const API_URL = "https://webandelec.app.n8n.cloud/webhook/lead-dashboard";
 
 async function loadDashboard() {
 
-  const response = await fetch(API_URL);
-  const data = await response.json();
+  let data;
+
+  try {
+    const response = await fetch(API_URL);
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    data = await response.json();
+  } catch (error) {
+    console.error("Failed to load dashboard:", error);
+    alert("Unable to load dashboard data. Please try refreshing the page.");
+    return;
+  }
 
   document.getElementById("total").textContent = data.total;
   document.getElementById("hot").textContent = data.hot;
